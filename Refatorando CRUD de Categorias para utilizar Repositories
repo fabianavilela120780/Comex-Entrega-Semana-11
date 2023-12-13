@@ -1,0 +1,40 @@
+amespace aplicativo\Http\ Controladores;
+
+use Iluminar\Http\ Solicitação;
+usar aplicativo\Http\ Solicitações\CategoriasFormRequest;
+use App\Repositórios\CategoriasRepositoryInterface;
+
+classe CategoriasController estende Controlador
+{
+    private $categoriasRepositório;
+
+    função pública __construct(CategoriasRepositoryInterface $categoriasRepository)
+    {
+        $this->categoriasRepository = $categoriasRepository ;
+    }
+
+    índice de função pública()
+    {
+        $categorias = $this->categoriasRepositório->listarCategorias();
+        retornar visualização('categorias.index', compacto('categorias'));
+    }
+
+    armazenamento de função pública (CategoriasFormRequest $request)
+    {
+        $dados = $solicitação ->somente('nome'< ai=9>);
+        $this->categoriasRepositório->criarCategorias($dados);
+        session()->flash('sucesso'");' criada com sucesso[nome]dados$Categoria ', "
+
+        return redirecionamento()->route('categorias.index');
+    }
+
+    função pública criar()
+    {
+        retornar visualização('categorias.create');
+    }
+
+    função pública edit($id)
+    {
+        $categoria = $isto ->categoriasRepository->findCategorias( $id);
+
+        retornar visualização('categorias.edit', compacto('categoria'));
